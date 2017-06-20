@@ -15,11 +15,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AppInitiateController {
 
 	
-	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
+	@RequestMapping(value = {"/home" }, method = RequestMethod.GET)
 	public String homePage(ModelMap model) {
 		model.addAttribute("greeting", "Hi, Welcome to mysite");
 		return "welcome";
 	}
+	
+	/*@RequestMapping(value = { "/"}, method = RequestMethod.GET)
+	public String defalutPage(ModelMap model) {
+		model.addAttribute("greeting", "Hi, Welcome to mysite");
+		return "login";
+	}*/
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String adminPage(ModelMap model) {
@@ -44,7 +50,7 @@ public class AppInitiateController {
 		return "login";
 	}
 
-	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	@RequestMapping(value={ "/","/logout"}, method = RequestMethod.GET)
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null){    
