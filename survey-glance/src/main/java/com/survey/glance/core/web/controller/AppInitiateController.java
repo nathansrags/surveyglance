@@ -1,9 +1,12 @@
 package com.survey.glance.core.web.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,11 +17,18 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.survey.glance.core.web.service.AuthenticationSuccessHandlerImpl;
+
+/**
+ * @author Administrator
+ *
+ */
 @Controller
 public class AppInitiateController {
-	
+
 	@Autowired
-	AuthenticationTrustResolver authenticationTrustResolver;
+	@Qualifier("customAuthenticationSuccessHandler")
+	private AuthenticationSuccessHandlerImpl authenticationSuccessHandlerImpl;
 
 	/**
 	 * @param model
@@ -31,11 +41,31 @@ public class AppInitiateController {
 	}
 
 	/**
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @throws IOException
+	 */
+	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
+	public void defalutPage(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model)  throws IOException {
+		final Authentication authentication = SecurityContextHolder
+				.getContext().getAuthentication();
+		authenticationSuccessHandlerImpl.onAuthenticationSuccess(request,
+				response, authentication);
+
+	}
+
+	/**
 	 * @param model
 	 * @return String
 	 */
-	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-	public String defalutPage(ModelMap model) {
+	/**
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String loginPage(ModelMap model){
 		model.addAttribute("greeting", "Hi, Welcome to mysite");
 		return "login";
 	}
@@ -55,9 +85,19 @@ public class AppInitiateController {
 	 * @return
 	 */
 	@RequestMapping(value = "/db", method = RequestMethod.GET)
-	public String dbaPage(ModelMap model) {
+	public String dbaPage(final ModelMap model) {
 		model.addAttribute("user", getPrincipal());
 		return "dba";
+	}
+
+	/**
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
+	public String anonymousUser(final ModelMap model) {
+		model.addAttribute("user", getPrincipal());
+		return "welcome";
 	}
 
 	/**
@@ -68,14 +108,6 @@ public class AppInitiateController {
 	public String accessDeniedPage(ModelMap model) {
 		model.addAttribute("user", getPrincipal());
 		return "accessDenied";
-	}
-
-	/**
-	 * @return
-	 */
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loginPage() {
-		return "login";
 	}
 
 	/**
@@ -110,13 +142,4 @@ public class AppInitiateController {
 		return userName;
 	}
 
-	/**
-	 * This method returns true if users is already authenticated [logged-in],
-	 * else false.
-	 */
-	private boolean isCurrentAuthenticationAnonymous() {
-		final Authentication authentication = SecurityContextHolder
-				.getContext().getAuthentication();
-		return authenticationTrustResolver.isAnonymous(authentication);
-	}
 }

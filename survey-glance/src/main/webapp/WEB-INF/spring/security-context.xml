@@ -8,14 +8,15 @@
 		<intercept-url pattern="/" access="permitAll" />
 		<intercept-url pattern="/home" access="permitAll" />
 		<intercept-url pattern="/admin**" access="hasRole('ADMIN')" />
-		<intercept-url pattern="/dba**" access="hasRole('ADMIN') and hasRole('DBA')" />
+		<intercept-url pattern="/dba**"
+			access="hasRole('ADMIN') and hasRole('DBA')" />
 
 		<!-- FORM LOGIN -->
 		<form-login login-page="/login"
 			authentication-success-handler-ref="customAuthenticationSuccessHandler"
 			authentication-failure-url="/Access_Denied" username-parameter="ssoId"
 			password-parameter="password" />
-			
+
 		<logout logout-success-url="/login?logout" delete-cookies="JSESSIONID" />
 		<csrf />
 
@@ -35,7 +36,10 @@
 	</authentication-manager>
 
 	<beans:bean id="customAuthenticationSuccessHandler"
-		class="com.survey.glance.core.web.service.AuthenticationSuccessHandlerImpl"></beans:bean>
+		class="com.survey.glance.core.web.service.AuthenticationSuccessHandlerImpl" />
+
+	<beans:bean id="authenticationTrustResolver"
+		class="org.springframework.security.authentication.AuthenticationTrustResolverImpl" />
 
 
 </beans:beans>

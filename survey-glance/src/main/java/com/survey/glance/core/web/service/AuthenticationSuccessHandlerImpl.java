@@ -36,9 +36,8 @@ public class AuthenticationSuccessHandlerImpl implements
 	protected void handle(final HttpServletRequest request,
 			final HttpServletResponse response,
 			final Authentication authentication) throws IOException {
-
-		String targetUrl = determineTargetUrl(authentication);
-
+		
+		final String targetUrl = determineTargetUrl(authentication);
 		if (response.isCommitted()) {
 			logger.debug("Response has already been committed. Unable to redirect to "
 					+ targetUrl);
@@ -49,33 +48,24 @@ public class AuthenticationSuccessHandlerImpl implements
 	}
 
 	protected String determineTargetUrl(final Authentication authentication) {
-		boolean isUser = false;
-		boolean isAdmin = false;
-		boolean isDBA = false;
-		Collection<? extends GrantedAuthority> authorities = authentication
-				.getAuthorities();
-		for (GrantedAuthority grantedAuthority : authorities) {
-			if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
-				isUser = true;
-				break;
-			} else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
-				isAdmin = true;
-				break;
-			} else if (grantedAuthority.getAuthority().equals("ROLE_DBA")) {
-				isAdmin = true;
-				break;
+		String targetUrl = "/login";
+		if (authentication != null ) {
+			final Collection<? extends GrantedAuthority> authorities = authentication
+					.getAuthorities();
+			for (final GrantedAuthority grantedAuthority : authorities) {
+				if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
+					targetUrl = "/welcome";
+					break;
+				} else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
+					targetUrl = "/admin";
+					break;
+				} else if (grantedAuthority.getAuthority().equals("ROLE_DBA")) {
+					targetUrl = "/dba";
+					break;
+				}
 			}
 		}
-
-		if (isUser) {
-			return "/welcome";
-		} else if (isAdmin) {
-			return "/admin";
-		} else if (isDBA) {
-			return "/dba";
-		} else {
-			throw new IllegalStateException();
-		}
+		return targetUrl;
 	}
 
 	/**
@@ -103,5 +93,4 @@ public class AuthenticationSuccessHandlerImpl implements
 	protected RedirectStrategy getRedirectStrategy() {
 		return redirectStrategy;
 	}
-
 }
