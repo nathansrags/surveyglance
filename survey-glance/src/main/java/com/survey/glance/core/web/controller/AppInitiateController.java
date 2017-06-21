@@ -32,7 +32,7 @@ public class AppInitiateController {
 
 	/**
 	 * @param model
-	 * @return
+	 * @return String
 	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String defalutPage(ModelMap model) {
