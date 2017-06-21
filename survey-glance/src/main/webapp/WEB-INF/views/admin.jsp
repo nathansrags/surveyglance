@@ -5,10 +5,14 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Admin page</title>
+    <title>Welcome page</title>
+    <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
+    <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 </head>
 <body>
-	Dear <strong>${user}</strong>, Welcome to Admin Page.
+	<div class="authbar">
+    <span>Dear <strong>${user}</strong>, Welcome to CrazyUsers.</span> <span class="floatRight"><a href="<c:url value="/logout" />">Logout</a></span>
+</div>
 	
 	<sec:authorize access="isFullyAuthenticated()">
 		<label><a href="#">Create New User</a> | <a href="#">View existing Users</a></label>
@@ -16,7 +20,5 @@
 	<sec:authorize access="isRememberMe()">
 		<label><a href="#">View existing Users</a></label>
 	</sec:authorize>
- 
-	<a href="<c:url value="/logout" />">Logout</a>
 </body>
 </html>

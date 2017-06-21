@@ -5,10 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>HelloWorld page</title>
+    <title>Welcome page</title>
+    <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
+    <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 </head>
 <body>
-	Greeting : ${greeting} This is a welcome page.
-	<a href='<c:url value="/logout" />'>Logout</a>
+<div class="authbar">
+    <span>Dear <strong>${user}</strong>, Welcome to CrazyUsers.</span> <span class="floatRight"><a href="<c:url value="/logout" />">Logout</a></span>
+</div>
 </body>
 </html>

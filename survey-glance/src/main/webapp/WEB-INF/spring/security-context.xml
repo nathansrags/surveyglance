@@ -27,13 +27,18 @@
 
 	<authentication-manager>
 		<authentication-provider>
+			<!-- <password-encoder ref="bcryptEncoder"/> -->
 			<user-service>
 				<user name="bill" password="root123" authorities="ROLE_USER" />
 				<user name="admin" password="root123" authorities="ROLE_ADMIN" />
-				<user name="dba" password="root123" authorities="ROLE_ADMIN,ROLE_DBA" />
+				<user name="dba" password="root123" authorities="ROLE_DBA,ROLE_ADMIN" />
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
+
+	<!-- password encoder -->
+	<beans:bean id="bcryptEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 	<beans:bean id="customAuthenticationSuccessHandler"
 		class="com.survey.glance.core.web.service.AuthenticationSuccessHandlerImpl" />
