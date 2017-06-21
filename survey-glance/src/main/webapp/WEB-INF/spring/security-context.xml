@@ -9,28 +9,33 @@
 		<intercept-url pattern="/home" access="permitAll" />
 		<intercept-url pattern="/admin**" access="hasRole('ADMIN')" />
 		<intercept-url pattern="/dba**" access="hasRole('ADMIN') and hasRole('DBA')" />
-		
+
 		<!-- FORM LOGIN -->
-		<form-login login-page="/logout" 
+		<form-login login-page="/login"
+			authentication-success-handler-ref="customAuthenticationSuccessHandler"
 			authentication-failure-url="/Access_Denied" username-parameter="ssoId"
 			password-parameter="password" />
+			
 		<logout logout-success-url="/login?logout" delete-cookies="JSESSIONID" />
 		<csrf />
-		
+
 		<!--Enable remember me -->
-		<!-- <remember-me token-validity-seconds="1209600"
-			remember-me-parameter="remember-me" data-source-ref="dataSource" /> -->
+		<!-- <remember-me token-validity-seconds="1209600" remember-me-parameter="remember-me" 
+			data-source-ref="dataSource" /> -->
 	</http>
 
 	<authentication-manager>
 		<authentication-provider>
 			<user-service>
-				<user name="bill" password="abc123" authorities="ROLE_USER" />
+				<user name="bill" password="root123" authorities="ROLE_USER" />
 				<user name="admin" password="root123" authorities="ROLE_ADMIN" />
 				<user name="dba" password="root123" authorities="ROLE_ADMIN,ROLE_DBA" />
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
+
+	<beans:bean id="customAuthenticationSuccessHandler"
+		class="com.survey.glance.core.web.service.AuthenticationSuccessHandlerImpl"></beans:bean>
 
 
 </beans:beans>
