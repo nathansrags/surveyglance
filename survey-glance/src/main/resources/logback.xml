@@ -19,7 +19,7 @@
 		<appender-ref ref="surveyLog" />
 	</logger>
 	
-	<logger name="com.survey.glance.core.web" level="DEBUG">>
+	<logger name="com.survey.glance.core.web" level="TRACE">
 		<appender-ref ref="surveyLog" />
 	</logger>
 
