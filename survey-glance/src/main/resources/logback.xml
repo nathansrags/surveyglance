@@ -1,34 +1,60 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-	<appender name="surveyLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
-			<file>D:/Logs/Solarpower/solarPower.log</file>
-			<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-	      		<fileNamePattern>D:/Logs/survey/survey.log.%i</fileNamePattern>
-	      		<minIndex>1</minIndex>
-	      		<maxIndex>20</maxIndex>
-	    	</rollingPolicy>
-	        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-	      		<maxFileSize>1000000</maxFileSize>
-	    	</triggeringPolicy>
-	        <encoder>
-				<Pattern>%level %d - %m%n</Pattern>
-			</encoder>
+<!-- unfortunately, Logback does not support schema or DTD. But in case of 
+	configuration failure, error messages would be shown. -->
+<configuration scan="true" scanPeriod="30 seconds" debug="false">
+	   
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 
+			by default -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %5level %X{userName} %X{REQUEST_ID} %36logger{40}:%-3line - %msg%n
+			</pattern>
+		</encoder>
 	</appender>
-	
-	<logger name="org.hibernate" level="DEBUG">
-		<appender-ref ref="surveyLog" />
-	</logger>
-	
-	<logger name="com.survey.glance.core.web" level="DEBUG">>
-		<appender-ref ref="surveyLog" />
-	</logger>
 
-	<logger name="org.springframework" level="DEBUG">
-		<appender-ref ref="surveyLog" />
-	</logger>
- 
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>c:/pcps_log/pcps.log</file>
+		<encoder>
+<!--			<pattern>%date %-5level %-35logger{10}:%-3line %msg%n</pattern>-->
+			<pattern>%date %5level %X{userName}  %X{REQUEST_ID} %35C{35}:%-3line %msg%n</pattern>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>c:/pcps_log/pcps.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+			<!-- keep 1 days' worth of history -->
+			<maxHistory>50</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<!-- or whenever the file size reaches 15MB -->
+				<maxFileSize>15MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	</appender>
+
+
+	<logger name="org.hibernate.SQL" level="ERROR" />
+	<logger name="org.hibernate.type" level="ERROR" />
+	<logger name="org.hibernate" level="ERROR" />
+	<logger name="org.apache" level="ERROR" />
+	<logger name="org.hibernate.cache" level="ERROR" />
+	<logger name="org.springframework" level="ERROR" />
+	<logger name="org.springframework.security" level="ERROR" />
+	<logger name="org.springframework.security.web.FilterChainProxy" level="ERROR" />
+	<logger name="org.springframework.jms" level="ERROR" />
+	<logger name="org.springframework.transaction" level="ERROR" />
+	<logger name="org.springframework.aop" level="ERROR" />
+	<logger name="org.springframework.orm" level="ERROR" />
+	<logger name="org.springmodules.jsr94" level="ERROR" />
+	<logger name="org.dozer" level="ERROR" />
+	<logger name="org.springframework.ws" level="ERROR" />
+	<logger name="org.springframework.beans.factory.support" level="ERROR" />
+	<logger name="org.springframework.web.servlet" level="ERROR" />
+	<logger name="com.survey.glance.core" level="DEBUG" />
+	
+
 	<root level="DEBUG">
-		<appender-ref ref="surveyLog" />
+		<appender-ref ref="FILE" />
+		<!-- <appender-ref ref="FILE" /> -->
 	</root>
-
 </configuration>
