@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Edit 'smtp.properties' to set a valid user and password for the mail 
+		sender. -->
+	<context:property-placeholder location="classpath:smtp/smtp.properties" />
+
+	<bean id="gmailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${smtp.gmail.host}" />
+		<property name="port" value="${smtp.gmail.port}" />
+		<property name="username" value="${smtp.gmail.username}" />
+		<property name="password" value="${smtp.gmail.password}" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">${mail.transport.protocol}</prop>
+				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+				<prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="amazonMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${smtp.amazon.host}" />
+		<property name="port" value="${smtp.amazon.port}" />
+		<property name="username" value="${smtp.amazon.username}" />
+		<property name="password" value="${smtp.amazon.password}" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">${mail.transport.protocol}</prop>
+				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+				<prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="velocityEngine"
+		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<property name="velocityProperties">
+			<props>
+				<prop key="resource.loader">class</prop>
+				<prop key="class.resource.loader.class">
+					org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+				</prop>
+			</props>
+		</property>
+		<!-- p:resourceLoaderPath="classpath:/org/springbyexample/email" p:preferFileSystemAccess="false"/> -->
+	</bean>
+</beans>
