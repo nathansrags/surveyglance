@@ -81,8 +81,7 @@ public class AppInitiateController {
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String adminPage(ModelMap model) {
 		model.addAttribute("user", getPrincipal());
-		//mailMessageBuilderService.sendMail();
-		mailMessageBuilderService.sendMailWithAttachment();
+		mailMessageBuilderService.sendEmailTemplate();
 		return "admin";
 	}
 

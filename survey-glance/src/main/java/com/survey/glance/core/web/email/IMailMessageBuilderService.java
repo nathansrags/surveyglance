@@ -28,9 +28,6 @@ public interface IMailMessageBuilderService extends MailSender {
 			final Map<String, Object> hTemplateVariables);
 	
 	
-	/**
-	 * 
-	 */
-	void sendMailWithAttachment();
+	void sendEmailTemplate();
 
 }

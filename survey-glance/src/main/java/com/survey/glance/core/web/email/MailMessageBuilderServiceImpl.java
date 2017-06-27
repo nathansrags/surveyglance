@@ -29,13 +29,9 @@ public class MailMessageBuilderServiceImpl implements
 		IMailMessageBuilderService {
 
 	@Autowired
-	@Qualifier("gmailSender")
-	private JavaMailSender gmailSender;
+	@Qualifier("mailSender")
+	private JavaMailSender mailSender;
 	
-	@Autowired
-	@Qualifier("amazonMailSender")
-	private JavaMailSender amazonMailSender;
-
 	@Autowired
 	@Qualifier("velocityEngine")
 	private VelocityEngine velocityEngine;
@@ -50,19 +46,19 @@ public class MailMessageBuilderServiceImpl implements
 	@Override
 	public void sendMail() {
 		SimpleMailMessage simpleMailMessage = tranformVoToMailMessage();
-		gmailSender.send(simpleMailMessage);
+		mailSender.send(simpleMailMessage);
 
 	}
 
 	@Override
 	public void send(SimpleMailMessage simpleMessage) throws MailException {
-		gmailSender.send(simpleMessage);
+		mailSender.send(simpleMessage);
 
 	}
 
 	@Override
 	public void send(SimpleMailMessage... simpleMessages) throws MailException {
-		gmailSender.send(simpleMessages);
+		mailSender.send(simpleMessages);
 
 	}
 
@@ -70,7 +66,7 @@ public class MailMessageBuilderServiceImpl implements
 	 * 
 	 */
 	@Override
-	public void sendMailWithAttachment() {
+	public void sendEmailTemplate() {
 		final SimpleMailMessage message = tranformVoToMailMessage();
 		Template template = velocityEngine.getTemplate(
 				"templates/welcomeemailtemplate.vm", "UTF-8");
@@ -82,7 +78,7 @@ public class MailMessageBuilderServiceImpl implements
 		final StringWriter stringWriter = new StringWriter();
 		template.merge(velocityContext, stringWriter);
 		message.setText(stringWriter.toString());
-		amazonMailSender.send(message);
+		mailSender.send(message);
 	}
 
 	@Override
@@ -102,7 +98,7 @@ public class MailMessageBuilderServiceImpl implements
 			}
 		};
 
-		amazonMailSender.send(preparator);
+		mailSender.send(preparator);
 
 	}
 

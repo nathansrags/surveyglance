@@ -6,27 +6,15 @@
 
 	<!-- Edit 'smtp.properties' to set a valid user and password for the mail 
 		sender. -->
-	<context:property-placeholder location="classpath:smtp/smtp.properties" />
-
-	<bean id="gmailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="${smtp.gmail.host}" />
-		<property name="port" value="${smtp.gmail.port}" />
-		<property name="username" value="${smtp.gmail.username}" />
-		<property name="password" value="${smtp.gmail.password}" />
-		<property name="javaMailProperties">
-			<props>
-				<prop key="mail.transport.protocol">${mail.transport.protocol}</prop>
-				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
-				<prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
-			</props>
-		</property>
-	</bean>
+	<context:property-placeholder location="classpath:smtp/smtp_${env_var}.properties" />
+	<context:property-placeholder location="classpath:database/db_${env_var}.properties" />
 	
-	<bean id="amazonMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="${smtp.amazon.host}" />
-		<property name="port" value="${smtp.amazon.port}" />
-		<property name="username" value="${smtp.amazon.username}" />
-		<property name="password" value="${smtp.amazon.password}" />
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${smtp.mail.host}" />
+		<property name="port" value="${smtp.mail.port}" />
+		<property name="username" value="${smtp.mail.username}" />
+		<property name="password" value="${smtp.mail.password}" />
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.transport.protocol">${mail.transport.protocol}</prop>
