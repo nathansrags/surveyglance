@@ -5,7 +5,7 @@
 		<File>E:/Gopi/logs/survey.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- daily rollover -->
-			<FileNamePattern>E:/Gopi/logs/survey-minute.%d{yyyy-MM-dd_HH-mm}.log
+			<FileNamePattern>E:/Gopi/logs/survey.%d{yyyy-MM-dd_HH}.GZ
 			</FileNamePattern>
 
 			<!-- keep 30 days' worth of history -->
@@ -17,19 +17,18 @@
 			</Pattern>
 		</encoder>
 	</appender>
-	
-	<logger name="org.springframework" level="debug" additivity="false">
+
+	<logger name="org.springframework" level="ERROR" additivity="false">
 		<appender-ref ref="dailyRollingFileAppender" />
 	</logger>
 
 	<logger name="org.springframework" additivity="false">
-		<level value="DEBUG" />
+		<level value="ERROR" />
 		<appender-ref ref="dailyRollingFileAppender" />
-		<!-- <appender-ref ref="minuteRollingFileAppender" /> -->
 	</logger>
 
 	<root>
-		<level value="DEBUG" />
-		<appender-ref ref="consoleAppender" />
+		<level value="ERROR" />
+		<appender-ref ref="dailyRollingFileAppender" />
 	</root>
 </configuration>
