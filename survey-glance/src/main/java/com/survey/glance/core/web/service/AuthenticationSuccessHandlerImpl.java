@@ -16,6 +16,13 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+/**
+ * Class used to redirect from login after successful spring authentication
+ * based on the user role
+ * 
+ * @author Administrator
+ *
+ */
 public class AuthenticationSuccessHandlerImpl implements
 		AuthenticationSuccessHandler {
 
@@ -24,6 +31,15 @@ public class AuthenticationSuccessHandlerImpl implements
 
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.springframework.security.web.authentication.AuthenticationSuccessHandler
+	 * #onAuthenticationSuccess(javax.servlet.http.HttpServletRequest,
+	 * javax.servlet.http.HttpServletResponse,
+	 * org.springframework.security.core.Authentication)
+	 */
 	@Override
 	public void onAuthenticationSuccess(final HttpServletRequest request,
 			final HttpServletResponse response,
@@ -33,10 +49,16 @@ public class AuthenticationSuccessHandlerImpl implements
 		clearAuthenticationAttributes(request);
 	}
 
+	/**
+	 * @param request
+	 * @param response
+	 * @param authentication
+	 * @throws IOException
+	 */
 	protected void handle(final HttpServletRequest request,
 			final HttpServletResponse response,
 			final Authentication authentication) throws IOException {
-		
+
 		final String targetUrl = determineTargetUrl(authentication);
 		if (response.isCommitted()) {
 			logger.debug("Response has already been committed. Unable to redirect to "
@@ -47,9 +69,13 @@ public class AuthenticationSuccessHandlerImpl implements
 		redirectStrategy.sendRedirect(request, response, targetUrl);
 	}
 
+	/**
+	 * @param authentication
+	 * @return
+	 */
 	protected String determineTargetUrl(final Authentication authentication) {
 		String targetUrl = "/login";
-		if (authentication != null ) {
+		if (authentication != null) {
 			final Collection<? extends GrantedAuthority> authorities = authentication
 					.getAuthorities();
 			for (final GrantedAuthority grantedAuthority : authorities) {

@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +16,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.survey.glance.core.web.email.IMailMessageBuilderService;
 import com.survey.glance.core.web.service.AuthenticationSuccessHandlerImpl;
 
 /**
@@ -29,6 +29,10 @@ public class AppInitiateController {
 	@Autowired
 	@Qualifier("customAuthenticationSuccessHandler")
 	private AuthenticationSuccessHandlerImpl authenticationSuccessHandlerImpl;
+	
+	@Autowired
+	@Qualifier("mailMessageBuilderService")
+	private IMailMessageBuilderService mailMessageBuilderService;
 
 	/**
 	 * @param model
@@ -77,6 +81,8 @@ public class AppInitiateController {
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String adminPage(ModelMap model) {
 		model.addAttribute("user", getPrincipal());
+		//mailMessageBuilderService.sendMail();
+		mailMessageBuilderService.sendMailWithAttachment();
 		return "admin";
 	}
 
