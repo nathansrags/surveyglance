@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<bean id="propertyConfigurer"
+		class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:smtp/smtp_${env_var}.properties</value>
+				<value>classpath:database/db_${env_var}.properties</value>
+			</list>
+		</property>
+	</bean>
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<import resource="classpath:smtp/spring-integration-email.xml"/>
-	<import resource="classpath:database/database-datasource.xml"/>
+	<import resource="classpath:smtp/spring-integration-email.xml" />
+
+	<import resource="classpath:database/database-datasource.xml" />
 </beans>

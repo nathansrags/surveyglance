@@ -6,9 +6,6 @@
 
 	<!-- Edit 'smtp.properties' to set a valid user and password for the mail 
 		sender. -->
-	<context:property-placeholder location="classpath:smtp/smtp_${env_var}.properties" />
-	<context:property-placeholder location="classpath:database/db_${env_var}.properties" />
-	
 	
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="${smtp.mail.host}" />

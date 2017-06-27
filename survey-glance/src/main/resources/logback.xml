@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="dailyRollingFileAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>E:/Gopi/logs/survey.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<FileNamePattern>E:/Gopi/logs/survey-minute.%d{yyyy-MM-dd_HH-mm}.log
+			</FileNamePattern>
+
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+
+		<encoder>
+			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n
+			</Pattern>
+		</encoder>
+	</appender>
+	
+	<logger name="org.springframework" level="debug" additivity="false">
+		<appender-ref ref="dailyRollingFileAppender" />
+	</logger>
+
+	<logger name="org.springframework" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="dailyRollingFileAppender" />
+		<!-- <appender-ref ref="minuteRollingFileAppender" /> -->
+	</logger>
+
+	<root>
+		<level value="DEBUG" />
+		<appender-ref ref="consoleAppender" />
+	</root>
+</configuration>
