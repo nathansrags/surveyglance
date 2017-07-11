@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.survey.glance.core.web.dao.UserDao;
-import com.survey.glance.core.web.model.User;
+import com.survey.glance.core.web.domain.User;
 
 @Service("userService")
 @Transactional
@@ -14,11 +14,11 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserDao dao;
 
-	public User findById(int id) {
+	public User findById(final Long id) {
 		return dao.findById(id);
 	}
 
-	public User findBySso(String sso) {
+	public User findBySso(final String sso) {
 		return dao.findBySSO(sso);
 	}
 

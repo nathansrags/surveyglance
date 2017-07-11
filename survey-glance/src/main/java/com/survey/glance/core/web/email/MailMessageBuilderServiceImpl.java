@@ -15,6 +15,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
@@ -80,7 +82,23 @@ public class MailMessageBuilderServiceImpl implements
 		message.setText(stringWriter.toString());
 		mailSender.send(message);
 	}
+	
+	
+	/**
+	 * @return
+	 */
+	private String getPrincipal() {
+		String userName = null;
+		Object principal = SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
 
+		if (principal instanceof UserDetails) {
+			userName = ((UserDetails) principal).getUsername();
+		} else {
+			userName = principal.toString();
+		}
+		return userName;
+	}
 	@Override
 	public void send(final SimpleMailMessage msg,
 			final Map<String, Object> hTemplateVariables) {
@@ -108,8 +126,8 @@ public class MailMessageBuilderServiceImpl implements
 	private MailMessageVO builMailMessageVO() {
 		final MailMessageVO mailMessageVO = new MailMessageVO();
 		mailMessageVO.setFromRecepient("donotreply@suveyglance.com");
-		mailMessageVO.setToRecepient("nathaninblog@gmail.com");
-		mailMessageVO.setText("Welcome User");
+		mailMessageVO.setToRecepient("nathansrags@gmail.com");
+		mailMessageVO.setText("Welcome "+getPrincipal());
 		mailMessageVO
 				.setSubject("Welcome Aboard | Survey Glance Private Limited");
 		return mailMessageVO;

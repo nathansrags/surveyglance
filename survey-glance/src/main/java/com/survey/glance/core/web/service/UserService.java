@@ -1,12 +1,24 @@
 package com.survey.glance.core.web.service;
 
-import com.survey.glance.core.web.model.User;
+import com.survey.glance.core.web.domain.User;
 
 
+/**
+ * @author Administrator
+ *
+ */
 public interface UserService {
 
-	User findById(int id);
+	/**
+	 * @param id
+	 * @return
+	 */
+	User findById(final Long id);
 	
-	User findBySso(String sso);
+	/**
+	 * @param sso
+	 * @return
+	 */
+	User findBySso(final String sso);
 	
 }

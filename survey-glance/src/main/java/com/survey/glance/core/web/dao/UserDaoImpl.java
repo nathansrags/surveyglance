@@ -1,23 +1,33 @@
 package com.survey.glance.core.web.dao;
 
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.survey.glance.core.web.model.User;
+import com.survey.glance.core.web.domain.User;
+import com.survey.glance.core.web.repository.UserRepository;
 
+/**
+ * @author Administrator
+ *
+ */
 @Repository("userDao")
-public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
+public class UserDaoImpl implements UserDao {
 
-	public User findById(int id) {
-		return getByKey(id);
+	@Autowired
+	private UserRepository userRepository;
+
+	public User findById(final Long id) {
+		return userRepository.findOne(id);
 	}
 
-	public User findBySSO(String sso) {
-		Criteria crit = createEntityCriteria();
-		crit.add(Restrictions.eq("ssoId", sso));
-		return (User) crit.uniqueResult();
+	public User findBySSO(final String sso) {
+		System.out.println("User Dao :" + sso);
+		List<User> users = userRepository.findAll();
+		System.out.println(users.get(0).getSsoId());
+		User user = userRepository.findAll().get(0);
+		return user;
 	}
 
-	
 }

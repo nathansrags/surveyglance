@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	 http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
 	<bean id="propertyConfigurer"
 		class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
@@ -17,4 +19,22 @@
 	<import resource="classpath:smtp/spring-integration-email.xml" />
 
 	<import resource="classpath:database/database-datasource.xml" />
+	
+	<jpa:repositories base-package="com.survey.glance.core.web.repository"
+					  entity-manager-factory-ref="entityManagerFactory" />
+
+	<!-- Authentication Filter for Google services -->
+
+	<!-- Filter to redirect to login page -->
+	<!-- <bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter"> 
+		<constructor-arg ref="authenticationEntryPoint" /> </bean> <bean id="authenticationEntryPoint" 
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"> 
+		<constructor-arg value="/login" /> </bean> <bean id="filterSecurityInterceptor" 
+		class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor"> 
+		<property name="accessDecisionManager" ref="accessDecisionManager" /> </bean> 
+		<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased"> 
+		<constructor-arg> <list> <bean class="org.springframework.security.web.access.expression.WebExpressionVoter" 
+		/> <bean class="org.springframework.security.access.vote.RoleVoter" /> <bean 
+		class="org.springframework.security.access.vote.AuthenticatedVoter" /> </list> 
+		</constructor-arg> </bean> -->
 </beans>
