@@ -18,12 +18,24 @@
 		</encoder>
 	</appender>
 
-	<logger name="org.springframework" level="ERROR" additivity="false">
+	<logger name="org.springframework" level="ERROR">
 		<appender-ref ref="dailyRollingFileAppender" />
 	</logger>
 
-	<logger name="org.springframework" additivity="false">
-		<level value="ERROR" />
+	<logger name="org.springframework.security" level="ERROR">
+		<appender-ref ref="dailyRollingFileAppender" />
+	</logger>
+
+	<logger name="org.springframework.security.authentication.dao"
+		level="debug">
+		<appender-ref ref="dailyRollingFileAppender" />
+	</logger>
+
+	<logger name="com.survey.glance.core" level="ERROR">
+		<appender-ref ref="dailyRollingFileAppender" />
+	</logger>
+
+	<logger name="org.hibernate" level="ERROR">
 		<appender-ref ref="dailyRollingFileAppender" />
 	</logger>
 

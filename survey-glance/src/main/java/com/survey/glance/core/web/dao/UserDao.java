@@ -1,13 +1,25 @@
 package com.survey.glance.core.web.dao;
 
-import com.survey.glance.core.web.model.User;
+import com.survey.glance.core.web.domain.User;
 
 
+/**
+ * @author Administrator
+ *
+ */
 public interface UserDao {
 
-	User findById(int id);
+	/**
+	 * @param id
+	 * @return
+	 */
+	User findById(final Long id);
 	
-	User findBySSO(String sso);
+	/**
+	 * @param sso
+	 * @return
+	 */
+	User findBySSO(final String sso);
 	
 }
 

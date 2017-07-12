@@ -5,8 +5,6 @@ import java.util.Map;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
-import com.survey.glance.core.web.email.vo.MailMessageVO;
-
 /**
  * @author Administrator
  *
