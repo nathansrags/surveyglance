@@ -5,24 +5,24 @@
     http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
 	<sec:http auto-config="true" use-expressions="true">
-		<sec:intercept-url pattern="/**" access="permitAll" />
-		<sec:intercept-url pattern="/admin**" access="hasRole('ADMIN')" />
-		<sec:intercept-url pattern="/dba**"
-			access="hasRole('ADMIN') and hasRole('DBA')" />
+		<!-- <sec:intercept-url pattern="/**" access="permitAll" /> -->
+		<sec:intercept-url pattern="/login" access="permitAll" />
+		<sec:intercept-url pattern="/visitor/**" access="ROLE_USER" />
+		<sec:intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
+		<sec:intercept-url pattern="/dba/**" access="hasRole('ADMIN') and hasRole('DBA')" />
 
 		<!-- FORM LOGIN -->
 		<sec:form-login login-page="/login" username-parameter="ssoId"
 			password-parameter="password" authentication-failure-url="/loginFailure"
 			authentication-success-handler-ref="customAuthenticationSuccessHandler" />
 
-		<sec:access-denied-handler error-page="/Access_Denied" />
+		<sec:access-denied-handler error-page="/loginFailure" />
 
 		<!-- <sec:custom-filter after="EXCEPTION_TRANSLATION_FILTER" ref="exceptionTranslationFilter" 
-			/> <sec:custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="filterSecurityInterceptor" 
 			/> -->
+		<sec:custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="filterSecurityInterceptor" />
 
-		<sec:logout logout-success-url="/login?logout"
-			delete-cookies="JSESSIONID" />
+		<sec:logout logout-success-url="/login?logout" delete-cookies="JSESSIONID" />
 		<sec:csrf />
 
 		<!--Enable remember me -->
@@ -30,7 +30,7 @@
 			data-source-ref="dataSource" /> -->
 	</sec:http>
 
-	<sec:authentication-manager>
+	<sec:authentication-manager id="authenticationManager">
 		<sec:authentication-provider
 			user-service-ref="customUserDetailsService">
 			<!-- <password-encoder ref="bcryptEncoder"/> -->
@@ -54,5 +54,32 @@
 	<beans:bean id="customUserDetailsService"
 		class="com.survey.glance.core.web.service.CustomUserDetailsService" />
 
+	<beans:bean id="filterSecurityInterceptor"
+		class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="accessDecisionManager" ref="accessDecisionManager" />
+		<beans:property name="securityMetadataSource" ref="securityMetaDataSource"/>
+	</beans:bean>
+	
+	<sec:filter-security-metadata-source id="securityMetaDataSource"
+		 use-expressions="true" lowercase-comparisons="true">
+		<sec:intercept-url pattern="/login" access="permitAll" />
+		<sec:intercept-url pattern="/visitor/**" access="hasRole('USER')" />
+		<sec:intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
+		<sec:intercept-url pattern="/dba/**" access="hasRole('DBA')" />
+	</sec:filter-security-metadata-source>
+	
+	<beans:bean id="accessDecisionManager"
+		class="org.springframework.security.access.vote.UnanimousBased">
+		<beans:constructor-arg>
+			<beans:list>
+				<beans:bean
+					class="org.springframework.security.web.access.expression.WebExpressionVoter" />
+				<beans:bean class="org.springframework.security.access.vote.RoleVoter" />
+				<beans:bean
+					class="org.springframework.security.access.vote.AuthenticatedVoter" />
+			</beans:list>
+		</beans:constructor-arg>
+	</beans:bean>
 
 </beans:beans>

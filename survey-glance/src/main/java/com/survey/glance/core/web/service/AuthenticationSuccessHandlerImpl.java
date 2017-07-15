@@ -16,6 +16,8 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.survey.glance.core.web.common.util.Constants;
+
 /**
  * Class used to redirect from login after successful spring authentication
  * based on the user role
@@ -74,19 +76,22 @@ public class AuthenticationSuccessHandlerImpl implements
 	 * @return
 	 */
 	protected String determineTargetUrl(final Authentication authentication) {
-		String targetUrl = "/login";
+		String targetUrl = Constants.NavigationConstants.SLASH_LOGIN;
 		if (authentication != null) {
 			final Collection<? extends GrantedAuthority> authorities = authentication
 					.getAuthorities();
 			for (final GrantedAuthority grantedAuthority : authorities) {
-				if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
-					targetUrl = "/welcome";
+				if (grantedAuthority.getAuthority().equals(
+						Constants.ROLE_CONSTANTS.ROLE_USER)) {
+					targetUrl = Constants.NavigationConstants.SLASH_VISITOR_HOME;
 					break;
-				} else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
-					targetUrl = "/admin";
+				} else if (grantedAuthority.getAuthority().equals(
+						Constants.ROLE_CONSTANTS.ROLE_ADMIN)) {
+					targetUrl = Constants.NavigationConstants.SLASH_ADMIN_HOME;
 					break;
-				} else if (grantedAuthority.getAuthority().equals("ROLE_DBA")) {
-					targetUrl = "/dba";
+				} else if (grantedAuthority.getAuthority().equals(
+						Constants.ROLE_CONSTANTS.ROLE_DBA)) {
+					targetUrl = Constants.NavigationConstants.SLASH_DBA_HOME;
 					break;
 				}
 			}

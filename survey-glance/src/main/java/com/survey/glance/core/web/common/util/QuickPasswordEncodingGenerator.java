@@ -1,4 +1,4 @@
-package com.survey.glance.core.common.util;
+package com.survey.glance.core.web.common.util;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

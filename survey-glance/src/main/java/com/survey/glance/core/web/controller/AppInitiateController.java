@@ -22,6 +22,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.drive.Drive;
+import com.survey.glance.core.web.common.util.Constants;
 import com.survey.glance.core.web.domain.User;
 
 /**
@@ -34,34 +35,25 @@ public class AppInitiateController extends AbstractController {
 	private static Logger LOG = LoggerFactory
 			.getLogger(AppInitiateController.class);
 
-	/**
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-	public String homePage(ModelMap model) {
-		model.addAttribute("greeting", "Hi, Welcome to mysite");
-		return "welcome";
-	}
 
 	/**
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/db", method = RequestMethod.GET)
+	@RequestMapping(value = Constants.NavigationConstants.SLASH_DBA_HOME, method = RequestMethod.GET)
 	public String dbaPage(final ModelMap model) {
 		model.addAttribute("user", getPrincipal());
-		return "dba";
+		return Constants.NavigationConstants.DBA_HOME;
 	}
 
 	/**
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
+	@RequestMapping(value = Constants.NavigationConstants.SLASH_ACCESS_DENIED, method = RequestMethod.GET)
 	public String accessDeniedPage(ModelMap model) {
 		model.addAttribute("user", getPrincipal());
-		return "accessDenied";
+		return Constants.NavigationConstants.ACCESS_DENIED;
 	}
 
 	/**
@@ -146,15 +138,6 @@ public class AppInitiateController extends AbstractController {
 		String familyName = (String) payload.get("family_name");
 		String givenName = (String) payload.get("given_name");
 		return "/welcome";
-	}
-
-	@RequestMapping(value = { "/newuser" }, method = RequestMethod.GET)
-	public String newUser(ModelMap model) {
-		User user = new User();
-		model.addAttribute("user", user);
-		model.addAttribute("edit", false);
-		model.addAttribute("loggedinuser", getPrincipal());
-		return "registration";
 	}
 
 	/**

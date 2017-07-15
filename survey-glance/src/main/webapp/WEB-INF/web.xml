@@ -37,7 +37,7 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+
 	<listener>
 		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
 	</listener>
@@ -49,6 +49,22 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/exceptions/error404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/views/exceptions/error500.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.io.IOException</exception-type>
+		<location>/WEB-INF/views/exceptions/IOException.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/WEB-INF/views/exceptions/Exception.jsp</location>
+	</error-page>
 	<session-config>
 		<session-timeout>5</session-timeout>
 	</session-config>

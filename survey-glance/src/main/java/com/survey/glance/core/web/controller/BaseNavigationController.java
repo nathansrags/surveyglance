@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.survey.glance.core.web.common.util.Constants;
 import com.survey.glance.core.web.service.AuthenticationSuccessHandlerImpl;
 
 /**
@@ -22,7 +23,7 @@ import com.survey.glance.core.web.service.AuthenticationSuccessHandlerImpl;
  *
  */
 @Controller
-public class BaseNavigationController {
+public class BaseNavigationController extends AbstractController{
 
 	@Autowired
 	@Qualifier("customAuthenticationSuccessHandler")
@@ -48,12 +49,10 @@ public class BaseNavigationController {
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = Constants.NavigationConstants.SLASH_LOGIN, method = RequestMethod.GET)
 	public String loginPage(ModelMap model) {
-		return "login";
+		return Constants.NavigationConstants.LOGIN;
 	}
-
-	
 
 	/**
 	 * @param request
@@ -63,7 +62,7 @@ public class BaseNavigationController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logoutPage(HttpServletRequest request,
 			HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext()
+		final Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
@@ -79,11 +78,24 @@ public class BaseNavigationController {
 	@RequestMapping(value = "/loginFailure", method = RequestMethod.GET)
 	public String loginFailure(HttpServletRequest request,
 			HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext()
+		final Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
 		return "redirect:/login?error";
+	}
+	
+	/**
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = Constants.NavigationConstants.SLASH_HOME, method = RequestMethod.GET)
+	public void redirectHome(final HttpServletRequest request,
+			final HttpServletResponse response) {
+		final Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
+		determineTargetUrl(request, response, authentication);
 	}
 }

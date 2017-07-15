@@ -18,7 +18,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="org.springframework" level="ERROR">
+	<logger name="org.springframework" level="DEBUG">
 		<appender-ref ref="dailyRollingFileAppender" />
 	</logger>
 
@@ -26,8 +26,7 @@
 		<appender-ref ref="dailyRollingFileAppender" />
 	</logger>
 
-	<logger name="org.springframework.security.authentication.dao"
-		level="debug">
+	<logger name="org.springframework.security.core" level="DEBUG">
 		<appender-ref ref="dailyRollingFileAppender" />
 	</logger>
 
@@ -36,6 +35,13 @@
 	</logger>
 
 	<logger name="org.hibernate" level="ERROR">
+		<appender-ref ref="dailyRollingFileAppender" />
+	</logger>
+
+	<logger name="javax.servlet" level="ERROR">
+		<appender-ref ref="dailyRollingFileAppender" />
+	</logger>
+	<logger name="org.apache.tiles" level="DEBUG">
 		<appender-ref ref="dailyRollingFileAppender" />
 	</logger>
 

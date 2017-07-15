@@ -13,6 +13,7 @@
 		<springsecurity.version>4.0.1.RELEASE</springsecurity.version>
 		<org.slf4j-version>1.7.5</org.slf4j-version>
 		<hibernate.version>4.3.5.Final</hibernate.version>
+		<apachetiles.version>3.0.5</apachetiles.version>
 	</properties>
 	<dependencies>
 		<!-- activation -->
@@ -26,6 +27,11 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.10</version>
 		</dependency>
 		<!-- Apache Commons DBCP -->
 		<dependency>
@@ -111,6 +117,7 @@
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
+		
 		<!-- log back -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -164,13 +171,6 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${springsecurity.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jpa</artifactId>
-			<version>1.11.4.RELEASE</version>
-		</dependency>
-
-
 		<!-- Spring ORM -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -195,6 +195,27 @@
 			<version>${org.slf4j-version}</version>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- Apache Tiles -->
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-core</artifactId>
+            <version>${apachetiles.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-api</artifactId>
+            <version>${apachetiles.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-servlet</artifactId>
+            <version>${apachetiles.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-jsp</artifactId>
+            <version>${apachetiles.version}</version>
+        </dependency>
 		<!-- Query DSL -->
 		<dependency>
 			<groupId>com.querydsl</groupId>

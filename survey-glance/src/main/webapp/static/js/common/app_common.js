@@ -26,10 +26,11 @@ var phaseGridHeight = 382;
 var rowNum = 3000;
 var dateFormat =  /^(0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])[\/\-][1-9]\d\d\d$/;
 var sysEndTsDefault = '12/31/9999';
+var BASEAPPURL = '/survey-glance/';
 
-$(document).ready(function() {
-	$("input:button,input:reset,input:submit").button();
-});
+function appendUrl(url){
+	return BASEAPPURL + url;
+}
 
 /** Function to convert cell value into italic style
  * @param cellval

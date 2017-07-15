@@ -1,4 +1,4 @@
-<jsp:include page="common/tagLibs.jsp"></jsp:include>
+<jsp:include page="../common/tagLibs.jsp"></jsp:include>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -45,7 +45,7 @@
 	</head>
 
 	<body class="no-skin">
-	<jsp:include page="authHeader.jsp"></jsp:include>
+	<jsp:include page="../authHeader.jsp"></jsp:include>
 		<div class="main-container ace-save-state" id="main-container">
 			<script type="text/javascript">
 				try{ace.settings.loadState('main-container')}catch(e){}

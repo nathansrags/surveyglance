@@ -19,9 +19,9 @@
 	<import resource="classpath:smtp/spring-integration-email.xml" />
 
 	<import resource="classpath:database/database-datasource.xml" />
-	
+
 	<jpa:repositories base-package="com.survey.glance.core.web.repository"
-					  entity-manager-factory-ref="entityManagerFactory" />
+		entity-manager-factory-ref="entityManagerFactory" />
 
 	<!-- Authentication Filter for Google services -->
 
@@ -29,12 +29,6 @@
 	<!-- <bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter"> 
 		<constructor-arg ref="authenticationEntryPoint" /> </bean> <bean id="authenticationEntryPoint" 
 		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"> 
-		<constructor-arg value="/login" /> </bean> <bean id="filterSecurityInterceptor" 
-		class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor"> 
-		<property name="accessDecisionManager" ref="accessDecisionManager" /> </bean> 
-		<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased"> 
-		<constructor-arg> <list> <bean class="org.springframework.security.web.access.expression.WebExpressionVoter" 
-		/> <bean class="org.springframework.security.access.vote.RoleVoter" /> <bean 
-		class="org.springframework.security.access.vote.AuthenticatedVoter" /> </list> 
-		</constructor-arg> </bean> -->
+		<constructor-arg value="/login" /> </bean> -->
+	
 </beans>

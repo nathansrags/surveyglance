@@ -7,6 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.survey.glance.core.web.common.util.Constants;
 import com.survey.glance.core.web.email.IMailMessageBuilderService;
 
 /**
@@ -15,9 +16,8 @@ import com.survey.glance.core.web.email.IMailMessageBuilderService;
  *
  */
 @Controller
-public class AdminNavigationController extends AbstractController{
-	
-	
+public class AdminNavigationController extends AbstractController {
+
 	@Autowired
 	@Qualifier("mailMessageBuilderService")
 	private IMailMessageBuilderService mailMessageBuilderService;
@@ -26,10 +26,10 @@ public class AdminNavigationController extends AbstractController{
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	@RequestMapping(value = Constants.NavigationConstants.SLASH_ADMIN_HOME, method = RequestMethod.GET)
 	public String adminPage(ModelMap model) {
 		model.addAttribute("user", getPrincipal());
-		//mailMessageBuilderService.sendEmailTemplate();
-		return "admin";
+		// mailMessageBuilderService.sendEmailTemplate();
+		return Constants.NavigationConstants.ADMIN_HOME;
 	}
 }
